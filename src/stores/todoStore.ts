@@ -11,7 +11,7 @@ class Todo {
   create(task: ITask): boolean {
     if (this.list.filter(t => t.id === task.id).length > 0) return false;
     else {
-        this.list.push(task);
+        this.list.push({...task, id: this.list.length + 1});
         return true;
     }
   }
@@ -20,12 +20,16 @@ class Todo {
     return this.list.filter(t => t.id === id)[0]
   }
 
-  update(id: number, task: ITask): void {
-    this.list.map(t => t.id === id ? task : t)
+  update(id: number, task: ITask): boolean {
+    this.list = this.list.map(t => t.id === id ? task : t)
+
+    return true
   }
 
-  delete(id: number): void {
-    this.list.map(t => t.id !== id && t)
+  delete(id: number): boolean {
+    this.list = this.list.filter(t => t.id !== id )
+
+    return true
   }
 }
 
